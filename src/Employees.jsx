@@ -8,6 +8,7 @@ class Employees extends React.Component {
     this.state = {
       employees:[],
       isloading:true,
+      issaving:false,
       isnewEmployee:false,
     }
     this.handleclickedCancel= this.handleclickedCancel.bind(this);
@@ -21,14 +22,30 @@ handleclickedCancel() {
 handleAdd() {
     this.setState({isnewEmployee: true});
 }
-handleclickedSubmit() {
-  this.setState({  isnewEmployee: false });
 
-  fetch('http://localhost:3000/employees')
-    .then(response => response.json())
-    .then(data => this.setState({ hits: data, isLoading: false }));
+handleclickedSubmit(name, company,age, email, isActive) {
+  this.setState({ isnewEmployee: false,issaving:true});
+  let url ="http://localhost:3000/employees"
+  fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        isActive: isActive,
+        age: age,
+        name: name,
+        company: company,
+        email: email
+    })}).then(() => {
+    fetch(url)
+        .then(data => data.json())
+        .then(employees => {
+            this.setState({employees, issaving: false});
+        });
+});
 }
-  componentDidMount(){
+componentDidMount(){
     let url ="http://localhost:3000/employees"
     fetch(url)
         .then(resp => resp.json())
@@ -38,8 +55,8 @@ handleclickedSubmit() {
   }
 
   render() {
-    const { employees, isloading, isnewEmployee} = this.state;
-    return isloading ? <p>Loading ...</p> :
+    const { employees, isloading, issaving, isnewEmployee} = this.state;
+    return isloading ? <p>Loading ...</p> : issaving ? <p>Saving...</p> :
       <div>
         {!isnewEmployee &&   <button onClick={this.handleAdd}>Add employee</button> } 
         {isnewEmployee &&   <EmployeeNew clickedSubmit={this.handleclickedSubmit} clickedCancel={this.handleclickedCancel}/>}
