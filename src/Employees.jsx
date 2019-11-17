@@ -1,4 +1,5 @@
 import React from 'react'
+import EmployeeNew from './EmployeeNew'
 
 class Employees extends React.Component {
 
@@ -7,10 +8,26 @@ class Employees extends React.Component {
     this.state = {
       employees:[],
       isloading:true,
+      isnewEmployee:false,
     }
+    this.handleclickedCancel= this.handleclickedCancel.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleclickedSubmit = this.handleclickedSubmit.bind(this);
   }
 
-  
+handleclickedCancel() {
+    this.setState({isnewEmployee: false});
+}
+handleAdd() {
+    this.setState({isnewEmployee: true});
+}
+handleclickedSubmit() {
+  this.setState({  isnewEmployee: false });
+
+  fetch('http://localhost:3000/employees')
+    .then(response => response.json())
+    .then(data => this.setState({ hits: data, isLoading: false }));
+}
   componentDidMount(){
     let url ="http://localhost:3000/employees"
     fetch(url)
@@ -21,9 +38,12 @@ class Employees extends React.Component {
   }
 
   render() {
-    const { employees, isloading } = this.state;
+    const { employees, isloading, isnewEmployee} = this.state;
     return isloading ? <p>Loading ...</p> :
       <div>
+        {!isnewEmployee &&   <button onClick={this.handleAdd}>Add employee</button> } 
+        {isnewEmployee &&   <EmployeeNew clickedSubmit={this.handleclickedSubmit} clickedCancel={this.handleclickedCancel}/>}
+        
         {employees.map((employee, index) => {
           return (
             <div key={index}>
@@ -36,6 +56,7 @@ class Employees extends React.Component {
             </div>
           )})
         }
+        
       </div>
     ;
     
