@@ -9,11 +9,13 @@ class Employees extends React.Component {
       employees:[],
       isloading:true,
       issaving:false,
+      iddelete:false,
       isnewEmployee:false,
     }
     this.handleclickedCancel= this.handleclickedCancel.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleclickedSubmit = this.handleclickedSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
 handleclickedCancel() {
@@ -45,6 +47,22 @@ handleclickedSubmit(name, company,age, email, isActive) {
         });
 });
 }
+
+handleDelete(id) {
+  this.setState({isnewEmployee: false, isdelete: true});
+  let url ="http://localhost:3000/employees"
+  fetch(url + "/" + id, {
+      method: 'DELETE'
+  }).then(() => {
+      fetch(url)
+          .then(data => data.json())
+          .then(employees => {
+              this.setState({employees, isdelete: false});
+          });
+  });
+}
+
+
 componentDidMount(){
     let url ="http://localhost:3000/employees"
     fetch(url)
@@ -55,7 +73,7 @@ componentDidMount(){
   }
 
   render() {
-    const { employees, isloading, issaving, isnewEmployee} = this.state;
+    const { employees, isloading, issaving, isdelete, isnewEmployee} = this.state;
     return isloading ? <p>Loading ...</p> : issaving ? <p>Saving...</p> :
       <div>
         {!isnewEmployee &&   <button onClick={this.handleAdd}>Add employee</button> } 
@@ -63,14 +81,31 @@ componentDidMount(){
         
         {employees.map((employee, index) => {
           return (
-            <div key={index}>
-              <h4>Employee : {employee._id}</h4>
-              <p>isActive: {employee.isActive.toString()}</p>
-              <p>Age: {employee.age}</p>
-              <p>Name: {employee.name}</p>
-              <p>Company: {employee.company}</p>
-              <p>Email: {employee.email}</p>           
-            </div>
+            <table style={{ margin: "15px 0 0 15px" }} key={employee.id}>
+              <tbody >
+              <tr>
+                 <td>Name: {employee.name}</td>
+              </tr>
+              <tr>
+                <td>Age: {employee.age}</td>
+              </tr>
+              <tr>
+                 <td>Company: {employee.company}</td>
+              </tr>
+              <tr>
+                 <td>Email: {employee.email}</td>  
+              </tr>
+              <tr>
+                 <td>isActive: {employee.isActive.toString()}</td>
+              </tr>
+              <tr>
+                 <td>
+                 {!isdelete && <button onClick={() => this.handleDelete(employee.id)}>Delete Employee</button>}
+                 {isdelete && <p>Deleting..</p>}  
+                   </td>
+              </tr>
+              </tbody>    
+            </table>
           )})
         }
         

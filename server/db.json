@@ -151,38 +151,6 @@
       "name": "Rosanna Newman",
       "company": "EXIAND",
       "email": "rosannanewman@exiand.com"
-    },
-    {
-      "isActive": true,
-      "age": "",
-      "name": "Ada",
-      "company": "Westfield",
-      "email": "ada.klimczak@gmail.com",
-      "id": "RSoSEmk"
-    },
-    {
-      "isActive": false,
-      "age": "21",
-      "name": "Adam",
-      "company": "Home",
-      "email": "aaa",
-      "id": "6j184vO"
-    },
-    {
-      "isActive": false,
-      "age": "26",
-      "name": "Wiola",
-      "company": "Westfield",
-      "email": "aaa",
-      "id": "Nuv6neL"
-    },
-    {
-      "isActive": true,
-      "age": "23",
-      "name": "Wiola",
-      "company": "Westfield",
-      "email": "aaa",
-      "id": "8YCofnu"
     }
   ]
 }
