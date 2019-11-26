@@ -1,9 +1,10 @@
 import React from 'react'
 import Employees from './Employees'
+import PageEmployeesList from './PageEmployeesList'
 
 const App = () => (
   <div>
-    <Employees /> 
+    <PageEmployeesList /> 
   </div>
 )
 
