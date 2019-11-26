@@ -1,14 +1,6 @@
 {
   "employees": [
     {
-      "id": "5dc9bdc63d783442fbd22b38",
-      "isActive": true,
-      "age": 30,
-      "name": "Maricela Wolf",
-      "company": "APEXTRI",
-      "email": "maricelawolf@apextri.com"
-    },
-    {
       "id": "5dc9bdc63d2a39982fbf83d8",
       "isActive": true,
       "age": 21,

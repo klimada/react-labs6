@@ -1,5 +1,6 @@
 import React from 'react'
 import PageEmployee from './PageEmployee'
+import { Link } from 'react-router-dom';
 
 class PageEmployeesList extends React.Component {
 
@@ -14,16 +15,30 @@ class PageEmployeesList extends React.Component {
     }
     this.handleclickedCancel= this.handleclickedCancel.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
-   
+    this.handleDelete = this.handleDelete.bind(this);
+
   }
 
 handleclickedCancel() {
     this.setState({isnewEmployee: false});
 }
 handleAdd() {
+    {<Link to="/new">About</Link>}
    // this.setState({isnewEmployee: true});
 }
-
+handleDelete(id) {
+    this.setState({isnewEmployee: false, isdelete: true});
+    let url ="http://localhost:3001/employees"
+    fetch(url + "/" + id, {
+        method: 'DELETE'
+    }).then(() => {
+        fetch(url)
+            .then(data => data.json())
+            .then(employees => {
+                this.setState({employees, isdelete: false});
+            });
+    });
+  }
 componentDidMount(){
     let url ="http://localhost:3001/employees"
     fetch(url)
@@ -32,13 +47,11 @@ componentDidMount(){
           this.setState({employees:employees,isloading:false});
         });
   }
-
+  
   render() {
     const { employees, isloading, issaving, isdelete, isnewEmployee} = this.state;
     return isloading ? <p>Loading ...</p> : issaving ? <p>Saving...</p> :
       <div>
-        <button onClick={this.handleAdd}>Add employee</button>
-       
         {employees.map((employee, index) => {
           return (
             <table style={{ margin: "15px 0 0 15px" }} key={employee.id}>
@@ -68,7 +81,7 @@ componentDidMount(){
             </table>
           )})
         }
-        
+        <Link to="new" style={{ margin: "15px 0 0 15px" }}><button>Create new employee</button></Link>
       </div>
     ;
     

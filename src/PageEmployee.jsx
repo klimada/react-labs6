@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 class PageEmployee extends React.Component {
     constructor(props) {
@@ -47,9 +48,7 @@ class PageEmployee extends React.Component {
               name: name,
               company: company,
               email: email
-          })}).then(() => {
-         //todo zaraz
-      });
+          })});
       }
 
     render() { 
@@ -62,8 +61,9 @@ class PageEmployee extends React.Component {
                 <div>Age: <input type="number" name="age" onChange={this.somethingChanged} /></div>
                 <div>Email: <input type="text" name="email" onChange={this.somethingChanged} />  </div>
                 <div>Is Active? <input type="checkbox" checked={this.state.isActive} onChange={this.isActiveChanged}  /> </div>           
-                <button onClick={() => this.clickedSubmit(name, company, age, email, isActive)}>Submit</button>
-            <button onClick={this.clickedCancel}>Cancel</button>
+                <Link to="/" ><button onClick={() => this.clickedSubmit(name, company, age, email, isActive)}>Submit</button></Link>       
+                <Link to="/" style={{ margin: "15px 0 0 15px" }}><button onClick={this.clickedCancel}>Cancel</button></Link>
+       
         </div>          
         );
     }
