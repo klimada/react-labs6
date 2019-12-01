@@ -10,9 +10,11 @@ class EmployeeNew extends React.Component {
         age: "",
         email: "",
         isActive: true,
+        isnewEmployee: false,
       };
       this.somethingChanged = this.somethingChanged.bind(this);
       this.isActiveChanged = this.isActiveChanged.bind(this);
+     
     }
 
     somethingChanged(event) {
@@ -26,6 +28,7 @@ class EmployeeNew extends React.Component {
         this.setState({isActive});
     }
 
+   
     render() { 
         const { name, company, age, email, isActive } = this.state;
         return (
@@ -36,10 +39,11 @@ class EmployeeNew extends React.Component {
                 <div>Age: <input type="number" name="age" onChange={this.somethingChanged} /></div>
                 <div>Email: <input type="text" name="email" onChange={this.somethingChanged} />  </div>
                 <div>Is Active? <input type="checkbox" checked={this.state.isActive} onChange={this.isActiveChanged}  /> </div>           
-                <button onClick={() => this.props.clickedSubmit(name, company, age, email, isActive)}>Submit</button>
-            <button onClick={this.props.clickedCancel}>Cancel</button>
+                <button onClick={() => this.props.clickedSubmit(name, company, age, email, isActive)}>Submit</button>    
+                <button onClick={ this.props.clickedCancel}>Cancel</button>
         </div>          
         );
     }
+   
 }
 export default EmployeeNew; 
